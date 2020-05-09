@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apdoer.common.service.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="org.apdoer.common.service.model.po.UserPo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="enabled" jdbcType="TINYINT" property="enabled"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
+        <result column="google_code" jdbcType="VARCHAR" property="googleCode"/>
+        <result column="trade_password" jdbcType="VARCHAR" property="tradePassword"/>
+        <result column="login_pass_grade" jdbcType="INTEGER" property="loginPassGrade"/>
+        <result column="google_validate" jdbcType="INTEGER" property="googleValidate"/>
+        <result column="avoid_fishing_code" jdbcType="VARCHAR" property="avoidFishingCode"/>
+        <result column="trade_safe" jdbcType="INTEGER" property="tradeSafe"/>
+        <result column="user_channel" jdbcType="VARCHAR" property="userChannel"/>
+        <result column="last_trade_time" jdbcType="TIMESTAMP" property="lastTradeTime"/>
+    </resultMap>
+    
+    <sql id="base_column_list">
+    	id,
+    	password,
+    	username,
+    	phone,
+    	email,
+    	enabled,
+    	create_time,
+    	last_login,
+    	google_code,
+    	trade_password,
+    	login_pass_grade,
+    	google_validate,
+    	avoid_fishing_code,
+    	trade_safe,
+    	user_channel,
+    	last_trade_time
+    </sql>
+
+	<select id="queryAllUser" resultType="java.lang.Integer">
+		select 
+			id
+		from web_user 
+		where 
+			enabled=0
+	</select>
+
+    <update id="updateUserPassword">
+        UPDATE web_user
+        	SET password = #{password}, 
+        	login_pass_grade = #{loginPassGrade}
+        WHERE 
+        	id = #{userId}
+    </update>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT 
+        	<include refid="base_column_list"/>
+        FROM web_user
+        WHERE 
+        	id = #{userId}
+    </select>
+    
+    <select id="getNoWalletUserList" resultType="java.lang.Integer">
+        SELECT 
+        	id
+        FROM web_user
+        WHERE not exists (select user_id from wallet_recharge_wallet where user_id = web_user.id)
+    </select>
+
+
+    
+    <select id="querySelect" resultMap="BaseResultMap">
+        SELECT 
+        	u.id,
+        	u.password,
+        	u.username,
+        	u.phone,
+        	u.email,
+        	u.enabled,
+        	u.create_time,
+        	u.last_login,
+        	u.google_code,
+        	u.trade_password,
+        	u.login_pass_grade,
+        	u.google_validate,
+        	u.avoid_fishing_code,
+        	u.trade_safe,
+        	u.user_channel,
+        	u.last_trade_time
+        FROM web_user u , web_certification c
+        <where>
+            <if test="createTimeStart != null">
+                u.create_time = #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND u.create_time = #{createTimeEnd}
+            </if>
+            <if test="certificationGrade != null and certificationGrade != '' ">
+                AND c.user_id = u.id AND c.certification_grade = #{certificationGrade}
+            </if>
+            <if test="id != null and id != '' ">
+                AND id = #{id}
+            </if>
+        </where>
+        ORDER BY create_time DESC ;
+
+    </select>
+    
+    <select id="queryUserInfo" resultMap="BaseResultMap">
+        SELECT 
+            u.id,
+        	u.password,
+        	u.username,
+        	u.phone,
+        	u.email,
+        	u.enabled,
+        	u.create_time,
+        	u.last_login,
+        	u.google_code,
+        	u.trade_password,
+        	u.login_pass_grade,
+        	u.google_validate,
+        	u.avoid_fishing_code,
+        	u.trade_safe,
+        	u.user_channel,
+        	u.last_trade_time
+        FROM web_user u
+        <where>
+            <if test="id != null and id != '' ">
+                AND id = #{id}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+
+    <update id="updateById">
+        UPDATE web_user
+        <set>
+            <if test="enabled != null and enabled != '' ">
+                enabled = #{enabled},
+            </if>
+            <if test="phone != null and phone != '' ">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != '' ">
+                email = #{email},
+            </if>
+            <if test="lastLogin != null">
+                last_login = #{lastLogin},
+            </if>
+            <if test="googleCode != null and googleCode != '' ">
+                google_code = #{googleCode},
+            </if>
+            <if test="googleValidate != null and googleValidate != '' ">
+                google_validate = #{googleValidate},
+            </if>
+            <if test="tradePassword != null and tradePassword != '' ">
+                trade_password = #{tradePassword},
+            </if>
+            <if test="loginPassGrade != null and loginPassGrade != '' ">
+                login_pass_grade = #{loginPassGrade},
+            </if>
+            <if test="avoidFishingCode != null and avoidFishingCode != '' ">
+                avoid_fishing_code = #{avoidFishingCode},
+            </if>
+            <if test="tradeSafe != null and tradeSafe != '' ">
+                trade_safe = #{tradeSafe},
+            </if>
+            <if test="lastTradeTime != null">
+                last_trade_time = #{lastTradeTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+
+    </update>
+
+
+
+
+</mapper>

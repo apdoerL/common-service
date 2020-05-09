@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apdoer.common.service.mapper.UserCodePoMapper">
+  <resultMap id="BaseResultMap" type="org.apdoer.common.service.model.po.UserCodePo">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+</mapper>
