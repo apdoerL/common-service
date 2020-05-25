@@ -12,35 +12,35 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class RequiresPermissionsConfig implements WebMvcConfigurer {
-	
-	@Autowired
-	private RequiresPermissionsInterceptorService interceptor;
 
-	@Autowired
-	private RequiresIdempotencyInterceptor requiresIdempotencyInterceptor;
+    @Autowired
+    private RequiresPermissionsInterceptorService interceptor;
 
-	public RequiresPermissionsInterceptorService requiresPermissionsInterceptorService() {
-		return interceptor;
-	}
+    @Autowired
+    private RequiresIdempotencyInterceptor requiresIdempotencyInterceptor;
 
-	public RequiresIdempotencyInterceptor requiresIdempotencyInterceptor() {
-		return requiresIdempotencyInterceptor;
-	}
-	
-	@Override
+    public RequiresPermissionsInterceptorService requiresPermissionsInterceptorService() {
+        return interceptor;
+    }
+
+    public RequiresIdempotencyInterceptor requiresIdempotencyInterceptor() {
+        return requiresIdempotencyInterceptor;
+    }
+
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
-		registry
-				.addInterceptor(requiresPermissionsInterceptorService())
-				.excludePathPatterns("/static/*")
-				.excludePathPatterns("/org/apdoer/common/service/common/*")
+        registry
+                .addInterceptor(requiresPermissionsInterceptorService())
+                .excludePathPatterns("/static/*")
+                .excludePathPatterns("/org/apdoer/common/service/common/*")
                 .excludePathPatterns("/error")
-				.addPathPatterns("/**");
-		registry
-				.addInterceptor(requiresIdempotencyInterceptor())
-				.excludePathPatterns("/static/*")
-				.excludePathPatterns("/org/apdoer/common/service/common/*")
-				.excludePathPatterns("/error")
-				.addPathPatterns("/**");
-		WebMvcConfigurer.super.addInterceptors(registry);
+                .addPathPatterns("/**");
+        registry
+                .addInterceptor(requiresIdempotencyInterceptor())
+                .excludePathPatterns("/static/*")
+                .excludePathPatterns("/org/apdoer/common/service/common/*")
+                .excludePathPatterns("/error")
+                .addPathPatterns("/**");
+        WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

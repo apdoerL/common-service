@@ -29,7 +29,7 @@ public class InviteImgUtil {
             throws IOException {
         Image qrimg = null;
         try {
-            qrimg = QRCodeGenUtil.genQrCodeWithNoPadding(inviteUrl, 160 );
+            qrimg = QRCodeGenUtil.genQrCodeWithNoPadding(inviteUrl, 160);
         } catch (Exception e) {
             log.error("邀请码二维码生成失败", e);
             return null;

@@ -44,6 +44,7 @@ public class RedisUtil {
         Assert.notNull(key, "non null key required");
         return this.keySerializer() == null && key instanceof byte[] ? (byte[]) key : this.keySerializer().serialize(key);
     }
+
     @SuppressWarnings("unchecked")
     byte[] rawValue(Object value) {
         return this.valueSerializer() == null && value instanceof byte[] ? (byte[]) ((byte[]) value) : this.valueSerializer().serialize(value);

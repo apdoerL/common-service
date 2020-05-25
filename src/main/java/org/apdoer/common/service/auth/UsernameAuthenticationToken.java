@@ -43,7 +43,7 @@ public class UsernameAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public void setAuthenticated(boolean authenticated) {
-        if (isAuthenticated()){
+        if (isAuthenticated()) {
             throw new IllegalArgumentException(
                     "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
         }

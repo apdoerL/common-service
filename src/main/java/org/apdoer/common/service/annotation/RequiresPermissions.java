@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface RequiresPermissions {
 
-    String [] value();
+    String[] value();
 
     /**
      * 默认权限 与 的关系

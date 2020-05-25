@@ -125,7 +125,7 @@ public class RedisLock {
         }
     }
 
-    private String trimQuot(String value){
-        return value.replace("\"","").replace("\"","");
+    private String trimQuot(String value) {
+        return value.replace("\"", "").replace("\"", "");
     }
 }

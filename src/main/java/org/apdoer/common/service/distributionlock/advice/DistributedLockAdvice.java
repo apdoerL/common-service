@@ -36,9 +36,8 @@ public class DistributedLockAdvice {
     final RedisUtil redisUtil;
 
     @Pointcut("@annotation(org.apdoer.common.service.distributionlock.annotation.DistributedLock)")
-    public void lockAspect(){
+    public void lockAspect() {
     }
-
 
 
     @Around("lockAspect()")
@@ -48,23 +47,22 @@ public class DistributedLockAdvice {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         DistributedLock lock = method.getAnnotation(DistributedLock.class);
 
-        String prefix = PREFIX + StringUtils.defaultIfBlank(lock.prefix(),type.getName()+":"+method.getName());
+        String prefix = PREFIX + StringUtils.defaultIfBlank(lock.prefix(), type.getName() + ":" + method.getName());
 
-        RedisLock redisLock = new RedisLock(redisUtil,prefix,lock.expireTime(),lock.timeunit(),lock.waitMillis(),lock.tryCount());
+        RedisLock redisLock = new RedisLock(redisUtil, prefix, lock.expireTime(), lock.timeunit(), lock.waitMillis(), lock.tryCount());
         boolean isLock = redisLock.getLock();
-        if (!isLock){
+        if (!isLock) {
             log.error("get lock fail,waiting....");
             throw new RuntimeException("get lock fail, please wait " + redisLock.getWaitSecond() + "seconds..");
         }
         Object result;
         try {
             result = joinPoint.proceed();
-        }finally {
+        } finally {
             redisLock.release();
         }
         return result;
     }
-
 
 
     private String getKey(Method method, Object[] args) {

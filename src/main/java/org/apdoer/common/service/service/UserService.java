@@ -23,27 +23,27 @@ public interface UserService {
      * @param userPo
      * @return
      */
-     int updateUserbById(UserPo userPo);
+    int updateUserbById(UserPo userPo);
 
     /***
      * 根据邮箱查找用户
      * @param email
      * @return
      */
-     UserPo getUserByEmail(String email);
+    UserPo getUserByEmail(String email);
 
     /***
      * 根据手机号查找用户
      * @param phone
      * @return
      */
-     UserPo getUserByPhone(String phone);
+    UserPo getUserByPhone(String phone);
 
     /***
      * 注册用户
      * @param user
      */
-     ResultVo save(UserPo user);
+    ResultVo save(UserPo user);
 
     /***
      *
@@ -51,14 +51,14 @@ public interface UserService {
      * @param newPassword
      * @return
      */
-     ResultVo updatePass(UserPo user, String newPassword);
+    ResultVo updatePass(UserPo user, String newPassword);
 
     /***
      * 获取用户权限
      * @param userId
      * @return
      */
-     List<PermissionPo> getPermissionList(Integer userId);
+    List<PermissionPo> getPermissionList(Integer userId);
 
     /**
      * 获取用户信息
@@ -66,5 +66,5 @@ public interface UserService {
      * @param userId
      * @return
      */
-     UserPo getUserById(Integer userId);
+    UserPo getUserById(Integer userId);
 }

@@ -53,6 +53,7 @@ public class JacksonUtil {
     /**
      * 将 JSON 转换为 自定义的复杂类型
      * 示例：List<Map<String,User>> listMap = Jackson.toObj(jsonStr, new TypeReference<List<Map<String,User>>>(){});
+     *
      * @param json
      * @param valueTypeRef
      * @return
@@ -114,7 +115,8 @@ public class JacksonUtil {
     @SuppressWarnings("unchecked")
     public static <T> List<T> jsonToList(String jsonStr, Class<T> clazz) {
         try {
-            List<Map<String, Object>> list = (List<Map<String, Object>>) mapper.readValue(jsonStr, new TypeReference<List<T>>() {});
+            List<Map<String, Object>> list = (List<Map<String, Object>>) mapper.readValue(jsonStr, new TypeReference<List<T>>() {
+            });
             List<T> result = new ArrayList<>();
             for (Map<String, Object> map : list) {
                 result.add(mapToObj(map, clazz));
@@ -157,7 +159,8 @@ public class JacksonUtil {
     @SuppressWarnings("unchecked")
     public static <T> Map<String, T> jsonToMap(String jsonStr, Class<T> clazz) {
         try {
-            Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>) mapper.readValue(jsonStr, new TypeReference<Map<String, T>>() {});
+            Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>) mapper.readValue(jsonStr, new TypeReference<Map<String, T>>() {
+            });
             Map<String, T> result = new HashMap<>();
             for (Map.Entry<String, Map<String, Object>> entry : map.entrySet()) {
                 result.put(entry.getKey(), mapToObj(entry.getValue(), clazz));

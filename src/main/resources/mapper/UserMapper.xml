@@ -19,77 +19,76 @@
         <result column="user_channel" jdbcType="VARCHAR" property="userChannel"/>
         <result column="last_trade_time" jdbcType="TIMESTAMP" property="lastTradeTime"/>
     </resultMap>
-    
+
     <sql id="base_column_list">
-    	id,
-    	password,
-    	username,
-    	phone,
-    	email,
-    	enabled,
-    	create_time,
-    	last_login,
-    	google_code,
-    	trade_password,
-    	login_pass_grade,
-    	google_validate,
-    	avoid_fishing_code,
-    	trade_safe,
-    	user_channel,
-    	last_trade_time
+        id,
+        password,
+        username,
+        phone,
+        email,
+        enabled,
+        create_time,
+        last_login,
+        google_code,
+        trade_password,
+        login_pass_grade,
+        google_validate,
+        avoid_fishing_code,
+        trade_safe,
+        user_channel,
+        last_trade_time
     </sql>
 
-	<select id="queryAllUser" resultType="java.lang.Integer">
-		select 
-			id
-		from web_user 
-		where 
-			enabled=0
-	</select>
+    <select id="queryAllUser" resultType="java.lang.Integer">
+        select
+        id
+        from web_user
+        where
+        enabled=0
+    </select>
 
     <update id="updateUserPassword">
         UPDATE web_user
-        	SET password = #{password}, 
-        	login_pass_grade = #{loginPassGrade}
-        WHERE 
-        	id = #{userId}
+        SET password = #{password},
+        login_pass_grade = #{loginPassGrade}
+        WHERE
+        id = #{userId}
     </update>
 
     <select id="getUserById" resultMap="BaseResultMap">
-        SELECT 
-        	<include refid="base_column_list"/>
+        SELECT
+        <include refid="base_column_list"/>
         FROM web_user
-        WHERE 
-        	id = #{userId}
+        WHERE
+        id = #{userId}
     </select>
-    
+
     <select id="getNoWalletUserList" resultType="java.lang.Integer">
-        SELECT 
-        	id
+        SELECT
+        id
         FROM web_user
         WHERE not exists (select user_id from wallet_recharge_wallet where user_id = web_user.id)
     </select>
 
 
-    
     <select id="querySelect" resultMap="BaseResultMap">
-        SELECT 
-        	u.id,
-        	u.password,
-        	u.username,
-        	u.phone,
-        	u.email,
-        	u.enabled,
-        	u.create_time,
-        	u.last_login,
-        	u.google_code,
-        	u.trade_password,
-        	u.login_pass_grade,
-        	u.google_validate,
-        	u.avoid_fishing_code,
-        	u.trade_safe,
-        	u.user_channel,
-        	u.last_trade_time
+        SELECT
+        u.id,
+        u.password,
+        u.username,
+        u.phone,
+        u.email,
+        u.enabled,
+        u.create_time,
+        u.last_login,
+        u.google_code,
+        u.trade_password,
+        u.login_pass_grade,
+        u.google_validate,
+        u.avoid_fishing_code,
+        u.trade_safe,
+        u.user_channel,
+        u.last_trade_time
         FROM web_user u , web_certification c
         <where>
             <if test="createTimeStart != null">
@@ -108,25 +107,25 @@
         ORDER BY create_time DESC ;
 
     </select>
-    
+
     <select id="queryUserInfo" resultMap="BaseResultMap">
-        SELECT 
-            u.id,
-        	u.password,
-        	u.username,
-        	u.phone,
-        	u.email,
-        	u.enabled,
-        	u.create_time,
-        	u.last_login,
-        	u.google_code,
-        	u.trade_password,
-        	u.login_pass_grade,
-        	u.google_validate,
-        	u.avoid_fishing_code,
-        	u.trade_safe,
-        	u.user_channel,
-        	u.last_trade_time
+        SELECT
+        u.id,
+        u.password,
+        u.username,
+        u.phone,
+        u.email,
+        u.enabled,
+        u.create_time,
+        u.last_login,
+        u.google_code,
+        u.trade_password,
+        u.login_pass_grade,
+        u.google_validate,
+        u.avoid_fishing_code,
+        u.trade_safe,
+        u.user_channel,
+        u.last_trade_time
         FROM web_user u
         <where>
             <if test="id != null and id != '' ">
@@ -177,8 +176,6 @@
         WHERE id = #{id}
 
     </update>
-
-
 
 
 </mapper>

@@ -14,7 +14,6 @@ public @interface RequiresIdempotency {
 
     /**
      * 过期时间 秒
-     *
      */
     int expire() default 3600;
 }

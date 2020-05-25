@@ -20,10 +20,9 @@ public interface UserMapper extends BaseMapper<UserPo> {
     public List<UserPo> queryUserInfo(UserPo userPo);
 
 
-
     public UserPo getUserById(@Param("userId") Integer userId);
-    
+
     public List<Integer> getNoWalletUserList();
-    
+
     public List<Integer> queryAllUser();
 }

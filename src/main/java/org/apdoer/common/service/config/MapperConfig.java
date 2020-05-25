@@ -11,5 +11,5 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan("org.apdoer.common.service.mapper")
 @Configuration
 public class MapperConfig {
-	
+
 }

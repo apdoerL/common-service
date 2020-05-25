@@ -2,13 +2,13 @@ package org.apdoer.common.service.enums;
 
 public enum Logical {
 
-	/**
-	 * AND
-	 */
-	AND,
+    /**
+     * AND
+     */
+    AND,
 
-	/**
-	 * OR
-	 */
-	OR;
+    /**
+     * OR
+     */
+    OR;
 }

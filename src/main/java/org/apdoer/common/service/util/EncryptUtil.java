@@ -62,8 +62,24 @@ public class EncryptUtil {
     }
 
 
+    public static String myMD5(String strSrc) {
+        MessageDigest md = null;
+        String encStr = null;
+        byte[] bt = strSrc.getBytes(StandardCharsets.UTF_8);
+
+        try {
+            md = MessageDigest.getInstance("MD5");
+            md.update(bt);
+            encStr = bytes2Hex(md.digest());
+        } catch (NoSuchAlgorithmException var5) {
+            log.error("error at md5",var5);
+        }
+
+        return encStr;
+    }
     /**
      * md5->16进制
+     *
      * @param strSrc
      * @return
      * @throws NoSuchAlgorithmException
@@ -97,7 +113,7 @@ public class EncryptUtil {
     /**
      * AES加密
      */
-    public static String encrypt(String randomKey,String sSrc) throws Exception {
+    public static String encrypt(String randomKey, String sSrc) throws Exception {
         byte[] raw = randomKey.getBytes(StandardCharsets.UTF_8);
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
         // "算法/模式/补码方式"
@@ -113,7 +129,7 @@ public class EncryptUtil {
     /**
      * AES解密
      **/
-    public static String decrypt(String randomKey,String sSrc) throws Exception {
+    public static String decrypt(String randomKey, String sSrc) throws Exception {
         // 随机密锁
         byte[] raw = randomKey.getBytes(US_ASCII);
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
@@ -189,22 +205,21 @@ public class EncryptUtil {
      * <br>
      * 转换后为:http://192.168.16.17:8085/#/share/shareRegister?inviteCode=VDVT<br>
      *
-     * @param hexString
-     *            以0x打头的16进制字符串
+     * @param hexString 以0x打头的16进制字符串
      * @return
      */
     public static String hexString2String(String hexString) {
         byte[] baKeyword = new byte[hexString.length() / 2];
-        int startIndex = hexString.startsWith( "0x" ) ? 1 : 0;
+        int startIndex = hexString.startsWith("0x") ? 1 : 0;
         for (int i = startIndex; i < baKeyword.length; i++) {
             try {
-                baKeyword[ i ] = (byte) (0xff & Integer.parseInt( hexString.substring( i * 2, i * 2 + 2 ), 16 ));
+                baKeyword[i] = (byte) (0xff & Integer.parseInt(hexString.substring(i * 2, i * 2 + 2), 16));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         try {
-            return new String( baKeyword, StandardCharsets.UTF_8).trim();
+            return new String(baKeyword, StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
             e.printStackTrace();
         }

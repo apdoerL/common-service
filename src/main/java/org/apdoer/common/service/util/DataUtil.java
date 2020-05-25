@@ -15,11 +15,11 @@ public class DataUtil {
     private static final String MAIL_REPLACE = "$1***$3";
     /**
      * $1 表示第1组的内容
-      */
+     */
     private static final Pattern MAIL_PATTERN = Pattern.compile(MAIL_REGEX);
 
     /**
-     *  手机号处理
+     * 手机号处理
      */
     private static final String PHONE_REGEX = "(\\d{3})(\\d*)(\\d{3})";
     private static final String PHONE_REPLACE = "$1****$3";

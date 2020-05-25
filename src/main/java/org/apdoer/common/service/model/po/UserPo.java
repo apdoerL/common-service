@@ -12,10 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserPo implements Serializable{
-	private static final long serialVersionUID = -2092561749596719704L;
+public class UserPo implements Serializable {
+    private static final long serialVersionUID = -2092561749596719704L;
 
-	//自增ID，主键，用户ID
+    //自增ID，主键，用户ID
     private Integer id;
 
     //密码
@@ -63,10 +63,6 @@ public class UserPo implements Serializable{
 
     //上次输入交易日期时间
     private Date lastTradeTime;
-
-
-
-
 
 
 }

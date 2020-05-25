@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * web 用户权限表
+ *
  * @author apdoer
  */
 @Table(name = "web_permission")
