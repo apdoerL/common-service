@@ -59,11 +59,11 @@
             <artifactId>javase</artifactId>
             <version>3.3.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.37</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>1.2.37</version>-->
+<!--        </dependency>-->
 
         <!-- Java Bean拷贝工具 -->
         <dependency>

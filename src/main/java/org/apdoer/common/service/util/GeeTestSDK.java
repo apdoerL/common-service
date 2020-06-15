@@ -2,8 +2,10 @@
 
 package org.apdoer.common.service.util;
 
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
+
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -12,6 +14,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GeeTestSDK {
     protected final String verName = "4.0";
@@ -50,33 +53,33 @@ public class GeeTestSDK {
         String md5Str1 = this.md5Encode(rnd1 + "");
         String md5Str2 = this.md5Encode(rnd2 + "");
         String challenge = md5Str1 + md5Str2.substring(0, 2);
-        JSONObject jsonObject = new JSONObject();
+        Map<String,Object> map = new HashMap<>();
 
         try {
-            jsonObject.put("success", 0);
-            jsonObject.put("gt", this.captchaId);
-            jsonObject.put("challenge", challenge);
-            jsonObject.put("new_captcha", this.newFailback);
-        } catch (JSONException var8) {
+            map.put("success", 0);
+            map.put("gt", this.captchaId);
+            map.put("challenge", challenge);
+            map.put("new_captcha", this.newFailback);
+        } catch (Exception var8) {
             this.gtlog("json dumps error");
         }
 
-        return jsonObject.toString();
+        return JacksonUtil.toJson(map);
     }
 
     private String getSuccessPreProcessRes(String challenge) {
         this.gtlog("challenge:" + challenge);
-        JSONObject jsonObject = new JSONObject();
+        Map<String,Object> map = new HashMap<>();
 
         try {
-            jsonObject.put("success", 1);
-            jsonObject.put("gt", this.captchaId);
-            jsonObject.put("challenge", challenge);
-        } catch (JSONException var4) {
+            map.put("success", 1);
+            map.put("gt", this.captchaId);
+            map.put("challenge", challenge);
+        } catch (Exception var4) {
             this.gtlog("json dumps error");
         }
 
-        return jsonObject.toString();
+        return JacksonUtil.toJson(map);
     }
 
     public int preProcess(HashMap<String, String> data) {
@@ -116,8 +119,8 @@ public class GeeTestSDK {
                 return 0;
             } else {
                 this.gtlog("result:" + result_str);
-                JSONObject jsonObject = JSONObject.parseObject(result_str);
-                String return_challenge = jsonObject.getString("challenge");
+                HashMap<String,Object> map = (HashMap<String, Object>) JacksonUtil.jsonToObj(result_str, Map.class);
+                String return_challenge = map.get("challenge").toString();
                 this.gtlog("return_challenge:" + return_challenge);
                 if (return_challenge.length() == 32) {
                     this.responseStr = this.getSuccessPreProcessRes(this.md5Encode(return_challenge + this.privateKey));
@@ -203,11 +206,11 @@ public class GeeTestSDK {
             String return_seccode = "";
 
             try {
-                JSONObject return_map = JSONObject.parseObject(response);
-                return_seccode = return_map.getString("seccode");
+                HashMap<String,Object> map = (HashMap<String, Object>) JacksonUtil.jsonToObj(response, Map.class);
+                return_seccode = map.get("seccode").toString();
                 this.gtlog("md5: " + this.md5Encode(return_seccode));
                 return return_seccode.equals(this.md5Encode(seccode)) ? 1 : 0;
-            } catch (JSONException var13) {
+            } catch (Exception var13) {
                 this.gtlog("json load error");
                 return 0;
             }

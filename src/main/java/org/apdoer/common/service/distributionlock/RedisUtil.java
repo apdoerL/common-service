@@ -1,8 +1,8 @@
 package org.apdoer.common.service.distributionlock;
 
-import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apdoer.common.service.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisOperations;
@@ -69,7 +69,7 @@ public class RedisUtil {
             @SuppressWarnings("unchecked")
             public Boolean execute(RedisOperations operations) throws DataAccessException {
                 operations.multi();
-                redisTemplate.opsForValue().setIfAbsent(key, JSON.toJSONString(value));
+                redisTemplate.opsForValue().setIfAbsent(key, JacksonUtil.toJson(value));
                 redisTemplate.expire(key, timeout, unit);
                 exec = operations.exec();
                 if (exec.size() > 0) {
